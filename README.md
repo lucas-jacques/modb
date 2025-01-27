@@ -99,13 +99,6 @@ Then you can call the repository methods. These methods are type-safe and inheri
 		panic(err)
 	}
 
-	user.Name = "Lucas Jacques"
-
-	err = userRepo.Update(ctx, user)
-	if err != nil {
-		panic(err)
-	}
-
 	for _, post := range user.Posts {
 		println(post.Title)
 	}
