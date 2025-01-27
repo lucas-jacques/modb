@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/lucasjacques/modb/model"
 	"github.com/lucasjacques/modb/queries"
@@ -58,7 +57,6 @@ func (m *ModelRepository[M, PK, C]) query(ctx context.Context, opts *queryOption
 	}
 
 	str, values := query.Build()
-	fmt.Println(str)
 
 	rows, err := m.db.Query(ctx, str, values...)
 	if err != nil {

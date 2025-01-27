@@ -2,7 +2,6 @@ package repo
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/lucasjacques/modb"
 	"github.com/lucasjacques/modb/model"
@@ -76,7 +75,6 @@ func (m *ModelRepository[M, PK, C]) Update(ctx context.Context, model *M) error 
 	}
 
 	sql, values := query.Where(queries.EQ(m.model.PrimaryKey(), queries.Value(pk))).Build()
-	fmt.Println(sql)
 	_, err = m.db.Exec(ctx, sql, values...)
 	if err != nil {
 		return err

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"modbexample/models"
 
 	"github.com/lucasjacques/modb/drivers/sqldriver"
@@ -65,15 +66,13 @@ func main() {
 		panic(err)
 	}
 
-	user.Name = "Lucas Jacques"
-
-	err = userRepo.Update(ctx, user)
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println("User:")
+	fmt.Println(user.Name)
+	fmt.Println(user.Age)
+	fmt.Println("Posts:")
 
 	for _, post := range user.Posts {
-		println(post.Title)
+		fmt.Println(post.Title)
 	}
 
 }

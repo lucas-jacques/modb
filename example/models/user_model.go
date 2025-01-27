@@ -5,8 +5,6 @@ import (
 )
 
 type (
-	UserMetadata = map[string]string
-
 	User struct {
 		Id    int
 		Name  string
