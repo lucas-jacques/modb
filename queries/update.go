@@ -2,12 +2,10 @@ package queries
 
 import (
 	"strings"
-
-	"github.com/lucasjacques/modb"
 )
 
 type Update struct {
-	params  modb.ParamsSet
+	params  ParamsSet
 	values  []Expr
 	columns []string
 	table   string

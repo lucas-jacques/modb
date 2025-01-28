@@ -3,12 +3,10 @@ package queries
 import (
 	"strconv"
 	"strings"
-
-	"github.com/lucasjacques/modb"
 )
 
 type Select struct {
-	params    modb.ParamsSet
+	params    ParamsSet
 	values    []any
 	columns   []string
 	table     string
@@ -18,7 +16,7 @@ type Select struct {
 	joins     []*Join
 }
 
-func NewQuery(placeholders modb.ParamsSet) *Query {
+func NewQuery(placeholders ParamsSet) *Query {
 	return &Query{params: placeholders}
 }
 

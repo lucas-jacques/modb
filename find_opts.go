@@ -1,4 +1,4 @@
-package repo
+package modb
 
 import (
 	"github.com/lucasjacques/modb/model"

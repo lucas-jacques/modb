@@ -1,9 +1,7 @@
 package queries
 
-import "github.com/lucasjacques/modb"
-
 type Query struct {
-	params modb.ParamsSet
+	params ParamsSet
 }
 
 func (q *Query) Select(table string, columns ...string) *Select {

@@ -1,4 +1,4 @@
-package repo
+package modb
 
 import (
 	"context"

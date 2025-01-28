@@ -2,8 +2,6 @@ package queries
 
 import (
 	"strings"
-
-	"github.com/lucasjacques/modb"
 )
 
 type Join struct {
@@ -12,7 +10,7 @@ type Join struct {
 	on    Expr
 }
 
-func (j *Join) Build(p modb.ParamsSet) (string, []any) {
+func (j *Join) Build(p ParamsSet) (string, []any) {
 	var parts []string
 	var params []any
 
@@ -41,7 +39,7 @@ func InnerJoin(table string) *Join {
 
 type raw string
 
-func (r raw) Build(_ modb.ParamsSet) (string, []any) {
+func (r raw) Build(_ ParamsSet) (string, []any) {
 	return string(r), nil
 }
 

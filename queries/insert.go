@@ -2,12 +2,10 @@ package queries
 
 import (
 	"strings"
-
-	"github.com/lucasjacques/modb"
 )
 
 type Insert struct {
-	placeholders modb.ParamsSet
+	placeholders ParamsSet
 	into         string
 	columns      []string
 	values       [][]any
@@ -18,7 +16,7 @@ func (i *Insert) Values(values []any) *Insert {
 	return i
 }
 
-func buildInsertPlaceholder(s modb.ParamsSet, count int) string {
+func buildInsertPlaceholder(s ParamsSet, count int) string {
 	builder := strings.Builder{}
 	builder.WriteString("(")
 	for i := 0; i < count; i++ {

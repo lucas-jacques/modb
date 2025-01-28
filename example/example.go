@@ -6,9 +6,8 @@ import (
 	"fmt"
 	"modbexample/models"
 
-	"github.com/lucasjacques/modb/drivers/sqldriver"
-	"github.com/lucasjacques/modb/repo"
-
+	"github.com/lucasjacques/modb"
+	"github.com/lucasjacques/modb/drivers/repo.sql"
 	_ "modernc.org/sqlite"
 )
 
@@ -30,10 +29,8 @@ func main() {
 
 	ctx := context.Background()
 
-	moDB := sqldriver.NewMODB(db, sqldriver.FQCNDoubleQuotes)
-
-	userRepo := repo.New(moDB, models.UserModel)
-	postRepo := repo.New(moDB, models.PostModel)
+	userRepo := repo.New(db, models.UserModel)
+	postRepo := repo.New(db, models.PostModel)
 
 	err = userRepo.Insert(ctx, &models.User{
 		Name: "Lucas",
@@ -61,7 +58,7 @@ func main() {
 		panic(err)
 	}
 
-	user, err := userRepo.FindById(ctx, 1, repo.Preload(models.UserRelations.Posts))
+	user, err := userRepo.FindById(ctx, 1, modb.Preload(models.UserRelations.Posts))
 	if err != nil {
 		panic(err)
 	}

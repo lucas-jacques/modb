@@ -2,8 +2,6 @@ package queries
 
 import (
 	"strings"
-
-	"github.com/lucasjacques/modb"
 )
 
 type simpleCond struct {
@@ -21,7 +19,7 @@ type logicalExpr struct {
 	operator string
 }
 
-func (w logicalExpr) Build(params modb.ParamsSet) (string, []any) {
+func (w logicalExpr) Build(params ParamsSet) (string, []any) {
 	var parts []string
 	var values []any
 
@@ -66,7 +64,7 @@ func LTE(left Expr, right Expr) simpleCond {
 	return newSimpleCond(left, "<=", right)
 }
 
-func (w simpleCond) Build(params modb.ParamsSet) (string, []any) {
+func (w simpleCond) Build(params ParamsSet) (string, []any) {
 	leftPart, leftValues := w.left.Build(params)
 	rightPart, rightValues := w.right.Build(params)
 
@@ -87,7 +85,7 @@ type inCond struct {
 	vals []Expr
 }
 
-func (w inCond) Build(params modb.ParamsSet) (string, []any) {
+func (w inCond) Build(params ParamsSet) (string, []any) {
 	var rightParts []string
 	var values []any
 

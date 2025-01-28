@@ -13,7 +13,7 @@ type (
 		User   User
 	}
 
-	postColumns struct {
+	postSchema struct {
 		Id     model.TypedCol[Post, int]
 		UserId model.TypedCol[Post, int]
 		Title  model.TypedCol[Post, string]
@@ -25,25 +25,18 @@ type (
 	}
 )
 
-func (pc *postColumns) PrimaryKey() model.TypedCol[Post, int] {
-	return pc.Id
-}
-
-func (pc *postColumns) Cols() []model.ModelCol[Post] {
-	return []model.ModelCol[Post]{
-		pc.Id,
-		pc.UserId,
-		pc.Title,
-		pc.Body,
-	}
-}
-
 var (
-	PostModel = model.New("posts", &postColumns{
-		Id:     model.AutoIncrement("id", func(p *Post) *int { return &p.Id }),
-		UserId: model.Col("user_id", func(p *Post) *int { return &p.UserId }),
-		Title:  model.Col("title", func(p *Post) *string { return &p.Title }),
-		Body:   model.Col("body", func(p *Post) *string { return &p.Body }),
+	PostModel = model.Define(model.ModelDefinition[Post, postSchema, int]{
+		Table: "posts",
+		Schema: postSchema{
+			Id:     model.AutoIncrement("id", func(p *Post) *int { return &p.Id }),
+			UserId: model.Col("user_id", func(p *Post) *int { return &p.UserId }),
+			Title:  model.Col("title", func(p *Post) *string { return &p.Title }),
+			Body:   model.Col("body", func(p *Post) *string { return &p.Body }),
+		},
+		PK: func(s postSchema) model.TypedCol[Post, int] {
+			return s.Id
+		},
 	})
 
 	PostRelations = &postRelations{

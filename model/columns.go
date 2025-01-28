@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/lucasjacques/modb"
+	"github.com/lucasjacques/modb/queries"
 )
 
 type column[M any, V any] struct {
@@ -23,11 +23,11 @@ func (c *column[M, V]) New() *V {
 }
 
 // ShouldOmit implements TypedCol.
-func (c *column[M, V]) ShouldOmit(m any, op modb.Operation) bool {
+func (c *column[M, V]) ShouldOmit(m any, op Operation) bool {
 	switch op {
-	case modb.OpInsert:
+	case OpInsert:
 		return c.omitOnInsert
-	case modb.OpUpdate:
+	case OpUpdate:
 		return c.omitOnUpdate
 	default:
 		return false
@@ -35,7 +35,6 @@ func (c *column[M, V]) ShouldOmit(m any, op modb.Operation) bool {
 }
 
 var _ TypedCol[any, any] = (*column[any, any])(nil)
-var _ ModelCol[any] = (*column[any, any])(nil)
 
 func (c *column[M, V]) setTable(table string) {
 	c.table = table
@@ -142,7 +141,7 @@ func (c *column[M, V]) FQCN() string {
 	return `"` + c.table + `".` + `"` + c.name + `"`
 }
 
-func (c *column[M, V]) Build(modb.ParamsSet) (string, []any) {
+func (c *column[M, V]) Build(queries.ParamsSet) (string, []any) {
 	return c.FQCN(), nil
 }
 

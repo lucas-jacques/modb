@@ -26,27 +26,18 @@ type (
 	}
 )
 
-func (u *userColumns) PrimaryKey() model.TypedCol[User, int] {
-	return u.Id
-}
-
-func (s *userColumns) Cols() []model.ModelCol[User] {
-	return []model.ModelCol[User]{
-		s.Id,
-		s.Name,
-		s.Age,
-	}
-}
-
 var (
-	UserModel = model.New(
-		"users",
-		&userColumns{
+	UserModel = model.Define(model.ModelDefinition[User, userColumns, int]{
+		Table: "users",
+		Schema: userColumns{
 			Id:   model.AutoIncrement("id", func(u *User) *int { return &u.Id }),
 			Name: model.Col("name", func(u *User) *string { return &u.Name }),
 			Age:  model.Col("age", func(u *User) *int { return &u.Age }),
 		},
-	)
+		PK: func(s userColumns) model.TypedCol[User, int] {
+			return s.Id
+		},
+	})
 
 	UserRelations = &userRelations{
 		Posts: model.HasMany(UserModel.Cols().Id, PostModel.Cols().UserId, func(u *User) *[]Post { return &u.Posts }),
@@ -59,10 +50,8 @@ var (
 MODB use the repository pattern. From your model definition and your db (or a transaction) you can create a repository object. The repository is a generic object:
 
 ```go
-    moDB := sqldriver.NewMODB(db, sqldriver.FQCNDoubleQuotes)
-
-    userRepo := repo.New(moDB, models.UserModel)
-    postRepo := repo.New(moDB, models.PostModel)
+    userRepo := repo.New(db, models.UserModel)
+    postRepo := repo.New(db, models.PostModel)
 ```
 
 

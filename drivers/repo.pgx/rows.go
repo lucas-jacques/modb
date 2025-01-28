@@ -1,4 +1,4 @@
-package pgxdriver
+package repo
 
 import "github.com/jackc/pgx/v5"
 

@@ -1,4 +1,4 @@
-module github.com/lucasjacques/modb/drivers/pgxdriver
+module github.com/lucasjacques/modb/drivers/repo.pgx
 
 go 1.23.2
 

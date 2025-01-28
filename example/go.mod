@@ -4,8 +4,11 @@ go 1.23.2
 
 replace github.com/lucasjacques/modb => ..
 
+replace github.com/lucasjacques/modb/drivers/repo.sql => ../drivers/repo.sql
+
 require (
 	github.com/lucasjacques/modb v0.0.0-00010101000000-000000000000
+	github.com/lucasjacques/modb/drivers/repo.sql v0.0.0-00010101000000-000000000000
 	modernc.org/sqlite v1.34.5
 )
 

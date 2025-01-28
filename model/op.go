@@ -1,4 +1,4 @@
-package modb
+package model
 
 type Operation uint8
 

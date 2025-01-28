@@ -1,4 +1,4 @@
-package modb
+package queries
 
 import "strconv"
 

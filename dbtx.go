@@ -2,8 +2,8 @@ package modb
 
 import (
 	"context"
-	"database/sql"
-	"errors"
+
+	"github.com/lucasjacques/modb/queries"
 )
 
 type Scannable interface {
@@ -13,22 +13,7 @@ type Scannable interface {
 type DBTX interface {
 	Exec(ctx context.Context, query string, args ...any) (CommandTag, error)
 	Query(ctx context.Context, query string, args ...any) (Rows, error)
-	QueryRow(ctx context.Context, query string, args ...any) Row
-	NewParamsSet() ParamsSet
-}
-
-type TX interface {
-	DBTX
-	Commit(ctx context.Context) error
-	Rollback(ctx context.Context) error
-}
-
-type TxOptions = sql.TxOptions
-
-type Database interface {
-	DBTX
-	Begin(ctx context.Context) (TX, error)
-	BeginTx(ctx context.Context, opts *TxOptions) (TX, error)
+	NewParamsSet() queries.ParamsSet
 }
 
 type CommandTag interface {
@@ -46,5 +31,3 @@ type Row interface {
 	Scannable
 	Err() error
 }
-
-var ErrNoRows = errors.New("no rows in result set")
